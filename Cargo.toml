@@ -5,6 +5,7 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+bpaf = { version = "0.9.16", features = ["autocomplete", "derive"] }
 
 [build-dependencies]
 vergen-gitcl = { version = "1.0.5", features = ["build"] }

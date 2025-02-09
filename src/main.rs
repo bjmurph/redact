@@ -1,37 +1,21 @@
 #![warn(clippy::all, clippy::pedantic)]
 
 mod editor;
+mod options;
 use std::env;
 
 use editor::Editor;
+use options::{options, Options};
 
 fn main() {
-	if env::args().any(|a| a == "--help" || a == "-h") {
-		show_help();
-		return;
-	}
+	let options = options().run();
 
-	if env::args().any(|a| a == "--version") {
+	if options.version {
 		show_version();
 		return;
 	}
 
-	let args: Vec<String> = env::args().collect();
-
-	Editor::new(args).run();
-}
-
-fn show_help() {
-	let binary_name = env!("CARGO_BIN_NAME");
-
-	print!(
-		"Usage: {binary_name} [arguments]
-
-Arguments:
-  --version        Print version information and exit
-  -h or --help     Print this help message and exit
-"
-	);
+	Editor::new(options).run();
 }
 
 fn show_version() {
