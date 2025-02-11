@@ -1,0 +1,10 @@
+on: push
+name: rustfmt
+
+jobs:
+  rustfmt-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Clippy
+        run:  cargo fmt --all --check -- --color=always

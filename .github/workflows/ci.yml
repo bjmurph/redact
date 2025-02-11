@@ -10,13 +10,17 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  build-and-test:
+    strategy:
+      matrix:
+        platform: [ubuntu, windows, macos]
+        profile: [dev, release]
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform }}--latest
 
     steps:
     - uses: actions/checkout@v4
     - name: Build
-      run: cargo build --verbose
+      run: cargo build --locked --verbose --profile=${{ matrix.profile }}
     - name: Run tests
-      run: cargo test --verbose
+      run: cargo test --locked --verbose --profile=${{ matrix.profile }}
