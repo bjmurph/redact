@@ -16,7 +16,7 @@ jobs:
         platform: [ubuntu, windows, macos]
         profile: [dev, release]
 
-    runs-on: ${{ matrix.platform }}--latest
+    runs-on: ${{ matrix.platform }}-latest
 
     steps:
     - uses: actions/checkout@v4
