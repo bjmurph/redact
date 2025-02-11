@@ -1,21 +1,34 @@
 #![warn(clippy::all, clippy::pedantic)]
 
 mod editor;
+mod input;
 mod options;
-use std::env;
+mod output;
+use std::{env, process::ExitCode};
 
 use editor::Editor;
+use input::Input;
 use options::{options, Options};
+use output::Output;
 
-fn main() {
+fn main() -> ExitCode {
 	let options = options().run();
 
 	if options.version {
 		show_version();
-		return;
+		return ExitCode::SUCCESS;
 	}
 
-	Editor::new(options).run();
+	match Editor::new(
+		options,
+		Input::default().unwrap(),
+		Output::default().unwrap(),
+	)
+	.run()
+	{
+		Ok(()) => ExitCode::SUCCESS,
+		Err(_) => ExitCode::FAILURE,
+	}
 }
 
 fn show_version() {
