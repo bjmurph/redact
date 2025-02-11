@@ -10,3 +10,6 @@ crossterm = "0.28.1"
 
 [build-dependencies]
 vergen-gitcl = { version = "1.0.5", features = ["build"] }
+
+[profile.release]
+lto = true
