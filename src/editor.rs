@@ -3,7 +3,7 @@ use std::io::Result;
 use crossterm::event::{
 	Event::{Key, Resize},
 	KeyCode::Char,
-	KeyEvent, KeyModifiers,
+	KeyEvent, KeyEventKind, KeyModifiers,
 };
 
 use crate::{input::TerminalInput, output::TerminalOutput, Options};
@@ -32,7 +32,7 @@ where
 
 		loop {
 			match self.input.read_event()? {
-				Some(Key(event)) => {
+				Some(Key(event)) if event.kind == KeyEventKind::Press => {
 					last_event = Some(format!("{event:?}"));
 
 					if let KeyEvent {
